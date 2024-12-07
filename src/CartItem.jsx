@@ -9,7 +9,11 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    let totalCost = 0
+    cart.forEach(item =>{
+        totalCost += item.cost
+    })
+    return totalCost 
   };
 
   const handleContinueShopping = (e) => {
@@ -19,6 +23,7 @@ const CartItem = ({ onContinueShopping }) => {
 
 
   const handleIncrement = (item) => {
+    dispatch(addItem(item))
   };
 
   const handleDecrement = (item) => {
@@ -26,6 +31,7 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item))
   };
 
   // Calculate total cost based on quantity for an item
@@ -33,7 +39,7 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   return (
-    <div className="cart-container">
+    <div className="cart-container" popover>
       <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount()}</h2>
       <div>
         {cart.map(item => (
