@@ -252,6 +252,9 @@ function ProductList() {
     const handleAddToCart = (item)=>{
         dispatch(addItem(item))
     }
+    const isItemInCart =(item)=>{
+        return cart.find(itemInCart => itemInCart.name === item.name)
+      }
     
     return (
         <div>
@@ -273,7 +276,7 @@ function ProductList() {
                     <div>
                         <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>
                             <h1 className='cart'>
-
+                                {cart.length}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 256 256"
@@ -305,7 +308,7 @@ function ProductList() {
                 {plantsArray.map((category, index) => (
                     <div key={index}>
                         <h1>
-                            <div>{category.category}</div>
+                            <div className="plants-category">{category.category}</div>
                         </h1>
                         <div className="product-list">
                             {category.plants.map((plant, plantIndex) => (
@@ -319,10 +322,10 @@ function ProductList() {
                                     <div className="product-description">{plant.description}</div>
                                     <div className="product-cost">{plant.cost}</div>
                                     <button
-                                        className="product-button"
+                                        className= {`product-button ${isItemInCart(plant)? 'disabled-product-button': ''}`}
                                         onClick={() => handleAddToCart(plant)}
                                     >
-                                        Add to Cart
+                                        {isItemInCart(plant)? "Purchased":"Add to Cart"}
                                     </button>
                                 </div>
                             ))}
